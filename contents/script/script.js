@@ -26,6 +26,7 @@ getShoppingCart();
 const output = (items) => {
   items.forEach((item) => { 
     let article = document.createElement("article");
+    article.setAttribute("class", "itemArticle")
 
     let itemName = document.createElement("h3");
     itemName.setAttribute("class", "itemName")
@@ -47,6 +48,34 @@ const output = (items) => {
     let add_button = document.createElement("button");
     add_button.setAttribute("class", "addItem")
     add_button.textContent = "Add to Cart";
+    
+    // use add_button to add item to cart.html with removal button
+    add_button.addEventListener("click", function () {
+
+      let list = document.createElement("ul");
+      let list_item = document.createElement("li");
+      let item_name = document.querySelector('.itemName').innerHTML;
+      let item_description = document.querySelector('.itemDescription').innerHTML;
+      let item_price = document.querySelector('.itemPrice').innerHTML;
+      let item_img = document.querySelector('.itemImg').innerHTML;
+      let delete_button = document.createElement("button");
+      delete_button.setAttribute("class", "removeItem")
+      delete_button.textContent = "❌";
+  
+      list_item.appendChild(item_name);
+      list_item.appendChild(item_description);
+      list_item.appendChild(item_price);
+      list_item.appendChild(item_img);
+      list_item.appendChild(delete_button);
+  
+      list.appendChild(list_item);
+  
+      delete_button.addEventListener("click", function() {
+          list.removeChild(list_item);
+      });
+      
+      document.getElementById("cart").appendChild(list);
+    });
 
     article.appendChild(itemName);
     article.appendChild(itemDescription);
@@ -57,36 +86,3 @@ const output = (items) => {
     document.getElementById("options").appendChild(article);
   });
 };
-
-// use add_button to add item to cart.html with removal button
-const cart = []
-const addButton = document.querySelector(".addItem");
-
-addButton.forEach(buttons => {
-    buttons.onclick = function (e) {
-
-    let list = document.querySelector("ul");
-    let list_item = document.createElement("li");
-    let item_name = e.closest('.addItem').querySelector('.itemName').innerHTML;
-    let item_description = e.closest('.addItem').querySelector('.itemDescription').innerHTML;
-    let item_price = e.closest('.addItem').querySelector('.itemPrice').innerHTML;
-    let item_img = e.closest('.addItem').querySelector('.itemImg').innerHTML;
-    let delete_button = document.createElement("button");
-    delete_button.setAttribute("class", "removeItem")
-    delete_button.textContent = "❌";
-
-    list_item.appendChild(item_name);
-    list_item.appendChild(item_description);
-    list_item.appendChild(item_price);
-    list_item.appendChild(item_img);
-    list_item.appendChild(delete_button);
-
-    list.appendChild(list_item);
-
-    delete_button.addEventListener("click", function() {
-        list.removeChild(list_item);
-    });
-    
-    document.getElementById("cart").appendChild(list);
-    };
-});
